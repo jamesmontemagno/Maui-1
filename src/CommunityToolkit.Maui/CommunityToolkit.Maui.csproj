@@ -41,9 +41,46 @@
 		<UseInterpreter Condition="$(TargetFramework.Contains('-android'))">False</UseInterpreter>
 	</PropertyGroup>
 
-	<ItemGroup>
-		<PackageReference Include="mdoc" Version="5.8.0" PrivateAssets="all" />
+  <ItemGroup>
+    <Compile Include="**\*.shared.cs" />
+    <Compile Include="**\*.shared.*.cs" />
+    <None Include="**\*.uwp.cs" />
+    <None Include="**\*.uwp.*.cs" />
+    <None Include="**\*.android.cs" />
+    <None Include="**\*.android.*.cs" />
+    <None Include="**\*.ios.cs" />
+    <None Include="**\*.ios.*.cs" />
+    <None Include="**\*.macos.cs" />
+    <None Include="**\*.macos.*.cs" />
+    <None Include="**\*.tizen.cs" />
+    <None Include="**\*.tizen.*.cs" />
+    <None Include="**\*.netstandard.cs" />
+    <None Include="**\*.netstandard.*.cs" />
+    <PackageReference Include="mdoc" Version="5.8.0" PrivateAssets="all" />
 	</ItemGroup>
+
+  <ItemGroup Condition=" $(TargetFramework.Contains('netstandard')) ">
+    <Compile Include="**\*.netstandard.cs" />
+    <Compile Include="**\*.netstandard.*.cs" />
+  </ItemGroup>
+
+  <ItemGroup Condition=" $(TargetFramework.Contains('uap10.0')) ">
+    <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform" Version="6.2.9" PrivateAssets="all" />
+    <Compile Include="**\*.uwp.cs" />
+    <Compile Include="**\*.uwp.*.cs" />
+  </ItemGroup>
+
+  <ItemGroup Condition=" $(TargetFramework.Contains('-ios')) ">
+    <Compile Include="**\*.ios.cs" />
+    <Compile Include="**\*.ios.*.cs" />
+  </ItemGroup>
+
+  <ItemGroup Condition=" $(TargetFramework.Contains('-android')) ">
+    <PackageReference Include="Xamarin.AndroidX.Browser" />
+    <Compile Include="**\*.android.cs" />
+    <Compile Include="**\*.android.*.cs" />
+    <AndroidResource Include="Resources\xml\*.xml" />
+  </ItemGroup>
 
 	<Import Project="..\..\mdoc.targets" Condition=" '$(OS)' == 'Windows_NT' AND '$(GenerateApiDocs)' == 'true'" />
 
